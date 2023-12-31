@@ -12,7 +12,7 @@
             <img :src="sponsor.img" class="sponsor-img" alt="WeekToDo Sponsor">
             <div class="my-2 mx-2">
               <div class="fw-bolder d-inline" style="text-decoration: unset !important;">{{ sponsor.name }}</div>
-              <div class="opacity-50 mx-2 d-inline"> {{ sponsor.message }}</div>
+              <div class="opacity-50 mx-2 d-inline"> Loading App... </div>
             </div>
           </a>
         </div>
@@ -34,50 +34,11 @@ export default {
     }
   },
   mounted() {
-    const axios = require('axios').default;
-    axios.get('https://weektodo.me/api/sponsors')
-      .then(response => (this.renderSponsor(response)))
-      .catch(error => console.log(error.message))
   }
   ,
   methods: {
     hideSplash: function () {
       this.show = false;
-    }
-    ,
-    renderSponsor: function (response) {
-      var sponsors = [];
-
-      sponsors.push({
-        name: "WeekToDo",
-        message: this.$t('donate.splashMessage'),
-        url: "https://weektodo.me/support-us",
-        img: "/icons/ko-fi.png",
-      });
-
-      response.data.bronze.forEach(function (obj) {
-        sponsors.push(obj);
-      });
-
-      response.data.silver.forEach(function (obj) {
-        for (let i = 0; i < 3; i++) {
-          sponsors.push(obj);
-        }
-      });
-
-      response.data.golden.forEach(function (obj) {
-        for (let i = 0; i < 7; i++) {
-          sponsors.push(obj);
-        }
-      });
-
-      response.data.diamond.forEach(function (obj) {
-        for (let i = 0; i < 15; i++) {
-          sponsors.push(obj);
-        }
-      });
-
-      this.sponsor = sponsors[Math.floor(Math.random() * sponsors.length)];
     }
   }
 }
